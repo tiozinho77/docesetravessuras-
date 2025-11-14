@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Catálogo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* (Estilos CSS básicos para não ficar tão feio) */
+        body { font-family: sans-serif; padding: 20px; }
+        .produto { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        .carrinho-item { display: flex; justify-content: space-between; }
+    </style>
+</head>
+<body>
+    <h1>Nosso Catálogo Online</h1>
+
+    <h2>Produtos</h2>
+    <div id="lista-produtos">Carregando produtos...</div>
+
+    <h2>Seu Pedido</h2>
+    <div id="carrinho">Vazio</div>
+    <hr>
+    <h3>Total: R$ <span id="total-carrinho">0.00</span></h3>
+
+    <h2>Seus Dados</h2>
+    <input type="text" id="nome-cliente" placeholder="Seu Nome Completo*">
+    <input type="text" id="telefone-cliente" placeholder="Seu WhatsApp* (para contato)">
+    <button id="btn-finalizar">Confirmar Pedido</button>
+    <div id="mensagem-status"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
