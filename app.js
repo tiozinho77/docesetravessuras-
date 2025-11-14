@@ -122,8 +122,8 @@ async function finalizarPedido() {
                 total: total,
                 status: 'PENDENTE' // Status inicial
             })
-            .select() // Pede para o Supabase retornar o objeto criado
-            .single(); // Esperamos apenas um
+          //  .select() // Pede para o Supabase retornar o objeto criado
+          //  .single(); // Esperamos apenas um
 
         if (pedidoError) throw pedidoError;
 
@@ -162,4 +162,5 @@ async function finalizarPedido() {
 // --- 6. INICIALIZAÇÃO ---
 // Adiciona os "escutadores" de eventos
 document.addEventListener('DOMContentLoaded', carregarProdutos);
+
 btnFinalizar.addEventListener('click', finalizarPedido);
