@@ -122,7 +122,7 @@ async function finalizarPedido() {
                 total: total,
                 status: 'PENDENTE' // Status inicial
             })
-            .select('id') // Pede para o Supabase retornar o objeto criado
+            .select() // Pede para o Supabase retornar o objeto criado
             .single(); // Esperamos apenas um
 
         if (pedidoError) throw pedidoError;
