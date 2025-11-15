@@ -101,6 +101,7 @@ function atualizarCarrinhoUI() {
 async function finalizarPedido() {
     const nomeCliente = inputNome.value;
     const telefoneCliente = inputTelefone.value;
+    const enderecoCliente = ""; // Adicione um campo de endereço se quiser
     
     if (carrinho.length === 0 || !nomeCliente || !telefoneCliente) {
         divStatus.innerText = "Por favor, adicione itens ao carrinho e preencha seu nome e telefone.";
@@ -113,39 +114,27 @@ async function finalizarPedido() {
     try {
         const total = parseFloat(spanTotal.innerText);
 
-        // 1. Insere o Cabeçalho do Pedido (na tabela 'pedidos_online')
-        const { data: pedidoData, error: pedidoError } = await sb
-            .from('pedidos_online')
-            .insert({
-                nome_cliente: nomeCliente,
-                telefone_cliente: telefoneCliente,
-                total: total,
-                status: 'PENDENTE' // Status inicial
-            })
-            .select('id') // Pede para o Supabase retornar o objeto criado
-            .single(); // Esperamos apenas um
-
-        if (pedidoError) throw pedidoError;
-
-        const novoPedidoId = pedidoData.id;
-
-        // 2. Prepara os Itens do Pedido
+        // 1. Mapeia o carrinho para o formato esperado pela função SQL
         const itensParaSalvar = carrinho.map(item => ({
-            pedido_id: novoPedidoId,
             produto_id: item.id,
             quantidade: item.qtd,
             preco_unitario: item.preco
         }));
 
-        // 3. Insere os Itens (na tabela 'pedidos_online_itens')
-        const { error: itensError } = await sb
-            .from('pedidos_online_itens')
-            .insert(itensParaSalvar);
+        // 2. CHAMA A FUNÇÃO RPC (Substitui o insert)
+        const { data: novoPedidoId, error } = await sb.rpc('criar_pedido_online', {
+            // Os argumentos devem ter os mesmos nomes da função SQL
+            nome_cliente: nomeCliente,
+            telefone_cliente: telefoneCliente,
+            endereco_cliente: enderecoCliente,
+            total: total,
+            itens: itensParaSalvar // Envia o array de itens
+        });
 
-        if (itensError) throw itensError;
+        if (error) throw error;
 
         // 4. Sucesso!
-        divStatus.innerText = "Pedido enviado com sucesso! Entraremos em contato.";
+        divStatus.innerText = `Pedido #${novoPedidoId} enviado com sucesso! Entraremos em contato.`;
         carrinho = [];
         atualizarCarrinhoUI();
         inputNome.value = "";
