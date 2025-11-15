@@ -21,6 +21,7 @@ const spanTotal = document.getElementById('total-carrinho');
 const btnFinalizar = document.getElementById('btn-finalizar');
 const inputNome = document.getElementById('nome-cliente');
 const inputTelefone = document.getElementById('telefone-cliente');
+const inputEndereco = document.getElementById('endereco-cliente');
 const divStatus = document.getElementById('mensagem-status');
 
 
