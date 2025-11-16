@@ -102,7 +102,7 @@ function atualizarCarrinhoUI() {
 async function finalizarPedido() {
     const nomeCliente = inputNome.value;
     const telefoneCliente = inputTelefone.value;
-    const enderecoCliente = ""; // Adicione um campo de endereço se quiser
+    const enderecoCliente = inputEndereco.value; // Adicione um campo de endereço se quiser
     
     if (carrinho.length === 0 || !nomeCliente || !telefoneCliente) {
         divStatus.innerText = "Por favor, adicione itens ao carrinho e preencha seu nome e telefone.";
@@ -140,6 +140,7 @@ async function finalizarPedido() {
         atualizarCarrinhoUI();
         inputNome.value = "";
         inputTelefone.value = "";
+        inputEndereco.value = "";
 
     } catch (error) {
         console.error('Erro ao finalizar pedido:', error);
